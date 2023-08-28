@@ -1,4 +1,4 @@
-'use-strict';
+'use strict';
 
 const mongoose = require('mongoose');
 
@@ -13,10 +13,11 @@ const BookSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Must Read', 'Read when you have time', 'Skip'],
+    // enum: ['Must Read', 'Read when you have time', 'Skip'],
+    required: true,
   },
 });
 
-const BookModel = mongoose.model('book', BookSchema);
+const BookModel = mongoose.model('books', BookSchema);
 
 module.exports = BookModel;
