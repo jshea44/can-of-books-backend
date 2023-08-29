@@ -25,13 +25,14 @@ app.get('/books', async (request, response) => {
   }
 });
 
-// read sinlge book object
+// read single book object
 app.get('/books/:bookTitle', (request, response) => {
   response.send(
     'You have hit the single book route' + request.params.bookTitle
   );
 });
 
+// create new book
 app.post('/books', async (request, response) => {
   console.log('BODY: ', request.body);
   let { title, description, status } = request.body;
@@ -42,6 +43,16 @@ app.post('/books', async (request, response) => {
   let book = new BookModel({ title, description, status });
   let document = await book.save();
   response.json(document);
+});
+
+// delete a book
+app.delete('/books/:bookId', async (request, resposne) => {
+  if (!request.params.bookId) {
+    request.status(404).send('Please provide a valid book.');
+    return;
+  }
+  let result = await BookModel.findByIdAndDelete(request.params.bookId);
+  resposne.status(204).send('Successfully deleted.');
 });
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
