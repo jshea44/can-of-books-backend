@@ -55,4 +55,17 @@ app.delete('/books/:bookId', async (request, resposne) => {
   resposne.status(204).send('Successfully deleted.');
 });
 
+// update  a book 
+app.put('/books/:bookId', async (request, response) => {
+  let id = request.params.bookId;
+
+  try {
+    await BookModel.replaceOne({_id:id}, request.body);
+    let newBook = await BookModel.findOne({_id:id});
+    response.status(200).json(newBook);
+  } catch (e) {
+    response.status(400).send(e);
+  }
+});
+
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
