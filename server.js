@@ -17,7 +17,7 @@ app.use(authorize); // apply authentication token checking
 
 mongoose.connect(MONGODB_URL);
 
-// read all books from database
+// read all books from databases
 app.get('/books', async (request, response) => {
   try {
     let documents = await BookModel.find({});
